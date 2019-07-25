@@ -14,15 +14,25 @@ public class ExpressPackage {
 
     private String name;
 
-    @Max(value = 11)
     private String phoneNumber;
 
     private String status;
 
-    private String weight;
+    private Double weight;
 
     private Date time;
 
+    public ExpressPackage(Long id, String name, @Max(value = 11) String phoneNumber, String status, Double weight, Date time) {
+
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.status = status;
+        this.weight = weight;
+        this.time = time;
+    }
+
+    public ExpressPackage() {
+    }
 
     public Long getId() {
         return id;
@@ -64,11 +74,11 @@ public class ExpressPackage {
         this.time = time;
     }
 
-    public String getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public void setWeight(String weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 }
