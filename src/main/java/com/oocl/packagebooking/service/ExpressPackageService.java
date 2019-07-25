@@ -32,7 +32,7 @@ public class ExpressPackageService {
     public ResponseEntity setAppointment(AppointmentDto appointmentDto) {
         ExpressPackage expressPackage = expressPackageRepository.findById(appointmentDto.getId()).orElse(null);
         int resultTime = getTimeHour(appointmentDto);
-        if (expressPackage!=null && resultTime>=9 && resultTime<=20) {
+        if (expressPackage!=null && resultTime>=9 && resultTime<20) {
             expressPackage.setStatus("Appointment");
             expressPackage.setTime(appointmentDto.getTime());
             expressPackageRepository.save(expressPackage);
