@@ -9,7 +9,6 @@ import java.util.Date;
 @Entity
 public class ExpressPackage {
     @Id
-    @GeneratedValue
     private Long id;
 
     private String name;

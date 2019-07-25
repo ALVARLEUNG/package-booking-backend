@@ -1,5 +1,6 @@
 package com.oocl.packagebooking.service;
 
+import com.oocl.packagebooking.dto.AppointmentDto;
 import com.oocl.packagebooking.model.ExpressPackage;
 import com.oocl.packagebooking.repository.ExpressPackageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,21 @@ public class ExpressPackageService {
         return expressPackageRepository.findAll();
     }
 
-    @Transactional
     public void addPackageAppointment(ExpressPackage expressPackage) {
         expressPackageRepository.save(expressPackage);
+    }
+
+    public void updatePackStatus(ExpressPackage expressPackage) {
+        expressPackageRepository.save(expressPackage);
+    }
+
+    public void setAppointment(AppointmentDto appointmentDto) {
+        ExpressPackage expressPackage = expressPackageRepository.findById(appointmentDto.getId()).orElse(null);
+        if (expressPackage!=null) {
+            expressPackage.setStatus("Appointment");
+            expressPackage.setTime(appointmentDto.getTime());
+            expressPackageRepository.save(expressPackage);
+        }
+
     }
 }
