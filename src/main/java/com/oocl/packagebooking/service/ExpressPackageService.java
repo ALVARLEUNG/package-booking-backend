@@ -4,6 +4,8 @@ import com.oocl.packagebooking.dto.AppointmentDto;
 import com.oocl.packagebooking.model.ExpressPackage;
 import com.oocl.packagebooking.repository.ExpressPackageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -27,13 +29,21 @@ public class ExpressPackageService {
         expressPackageRepository.save(expressPackage);
     }
 
-    public void setAppointment(AppointmentDto appointmentDto) {
+    public ResponseEntity setAppointment(AppointmentDto appointmentDto) {
         ExpressPackage expressPackage = expressPackageRepository.findById(appointmentDto.getId()).orElse(null);
-        if (expressPackage!=null) {
+        int resultTime = getTimeHour(appointmentDto);
+        if (expressPackage!=null && resultTime>=9 && resultTime<=20) {
             expressPackage.setStatus("Appointment");
             expressPackage.setTime(appointmentDto.getTime());
             expressPackageRepository.save(expressPackage);
+            return ResponseEntity.status(HttpStatus.OK).build();
         }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
+    }
+
+    private int getTimeHour(AppointmentDto appointmentDto) {
+        String[] timeNodes = appointmentDto.getTime().toString().split(" ");
+        return Integer.parseInt(timeNodes[3].substring(0,  timeNodes[3].indexOf(":")));
     }
 }

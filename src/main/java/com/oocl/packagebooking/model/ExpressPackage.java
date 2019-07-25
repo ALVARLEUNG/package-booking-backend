@@ -1,9 +1,9 @@
 package com.oocl.packagebooking.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.Max;
 import java.util.Date;
 
 @Entity
@@ -19,16 +19,8 @@ public class ExpressPackage {
 
     private Double weight;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date time;
-
-    public ExpressPackage(Long id, String name, @Max(value = 11) String phoneNumber, String status, Double weight, Date time) {
-
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.status = status;
-        this.weight = weight;
-        this.time = time;
-    }
 
     public ExpressPackage() {
     }
